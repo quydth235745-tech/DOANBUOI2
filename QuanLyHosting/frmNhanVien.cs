@@ -237,7 +237,6 @@ namespace QuanLyHosting
                 MessageBox.Show("Nhân viên phải đủ 18 tuổi", "Lỗi");
                 return false;
             }
-
             return true;
         }
 
@@ -254,15 +253,37 @@ namespace QuanLyHosting
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
+            // 1. Lấy từ khóa
             string keyword = txtTimKiem.Text.Trim();
 
-            if (string.IsNullOrEmpty(keyword))
+            // 2. Ràng buộc: không được để trống
+            if (string.IsNullOrWhiteSpace(keyword))
             {
-                LoadNhanVien(); // load lại toàn bộ
+                MessageBox.Show(
+                    "Vui lòng nhập từ khóa tìm kiếm!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                txtTimKiem.Focus();
                 return;
             }
 
-            var ds = context.NhanVien
+            // 3. Ràng buộc: không cho nhập ký tự tào lao
+            if (!keyword.Any(char.IsLetterOrDigit))
+            {
+                MessageBox.Show(
+                    "Từ khóa tìm kiếm không hợp lệ!",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                txtTimKiem.Focus();
+                return;
+            }
+
+            // 4. Tìm kiếm theo Mã NV – Họ tên – Vai trò
+            var result = context.NhanVien
                 .Where(nv =>
                     nv.MaNV.Contains(keyword) ||
                     nv.HoTen.Contains(keyword) ||
@@ -280,12 +301,29 @@ namespace QuanLyHosting
                 })
                 .ToList();
 
-            dgvNhanVien.DataSource = ds;
+            // 5. Không có kết quả
+            if (result.Count == 0)
+            {
+                MessageBox.Show(
+                    "Không tồn tại nhân viên phù hợp!",
+                    "Kết quả",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                dgvNhanVien.DataSource = null;
+                return;
+            }
+
+            // 6. Có kết quả
+            dgvNhanVien.DataSource = result;
         }
 
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
-            btnTimKiem_Click(sender, e);
+            if(string.IsNullOrWhiteSpace(txtTimKiem.Text))
+    {
+                LoadNhanVien();
+            }
         }
     }
 }
