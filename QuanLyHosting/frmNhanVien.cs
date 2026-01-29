@@ -6,6 +6,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+
 
 namespace QuanLyHosting
 {
@@ -21,50 +23,56 @@ namespace QuanLyHosting
 
         private void frmNhanVien_Load(object sender, EventArgs e)
         {
-            dgvNhanVien.DataSource = context.NhanVien.ToList();
-            BatTatChucNang(true);
             LoadNhanVien();
+            BatTatChucNang(true);
+            dgvNhanVien.AutoGenerateColumns = true;
+            dgvNhanVien.AllowUserToAddRows = false;
+            dgvNhanVien.ReadOnly = true;
+            dgvNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
-        void BatTatChucNang(bool giaTri)
+        void BatTatChucNang(bool xem)
         {
-            btnThem.Enabled = giaTri;
-            btnSua.Enabled = giaTri;
-            btnXoa.Enabled = giaTri;
+            btnThem.Enabled = xem;
+            btnSua.Enabled = xem;
+            btnXoa.Enabled = xem;
 
-            btnLuu.Enabled = !giaTri;
-            btnHuyBo.Enabled = !giaTri;
+            btnLuu.Enabled = !xem;
+            btnHuyBo.Enabled = !xem;
 
-            txtMaNV.Enabled = !giaTri;
-            txtTen.Enabled = !giaTri;
-            txtEmail.Enabled = !giaTri;
-            txtSDT.Enabled = !giaTri;
-            txtDiaChi.Enabled = !giaTri;
-            txtDangNhap.Enabled = !giaTri;
-            txtMatkhau.Enabled = !giaTri;
-            cboVaitro.Enabled = !giaTri;
-            cboTrangthai.Enabled = !giaTri;
-            dtpNgaysinh.Enabled = !giaTri;
+            txtMaNV.Enabled = !xem;
+            txtTen.Enabled = !xem;
+            txtEmail.Enabled = !xem;
+            txtSDT.Enabled = !xem;
+            txtDiaChi.Enabled = !xem;
+            txtDangNhap.Enabled = !xem;
+            txtMatkhau.Enabled = !xem;
+            cboVaitro.Enabled = !xem;
+            cboTrangthai.Enabled = !xem;
+            dtpNgaysinh.Enabled = !xem;
         }
         private void LoadNhanVien()
         {
             dgvNhanVien.DataSource = context.NhanVien
-         .Select(nv => new
-         {
-             nv.Id,
-             nv.MaNV,
-             nv.HoTen,
-             nv.DangNhap,
-             nv.VaiTro,
-             nv.TrangThai,
-             nv.NgayTao
-         }).ToList();
-
-            BatTatChucNang(false);
+        .Select(nv => new
+        {
+            nv.Id,
+            nv.MaNV,
+            nv.HoTen,
+            nv.Email,
+            nv.DienThoai,
+            nv.DiaChi,
+            nv.NgaySinh,
+            nv.DangNhap,
+            nv.VaiTro,
+            nv.TrangThai,
+            nv.NgayTao
+        }).ToList();
         }
         private void btnThem_Click(object sender, EventArgs e)
         {
             xuLyThem = true;
-            BatTatChucNang(true);
+            BatTatChucNang(false);
+
             txtMaNV.Clear();
             txtTen.Clear();
             txtEmail.Clear();
@@ -79,68 +87,53 @@ namespace QuanLyHosting
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (dgvNhanVien.CurrentRow == null)
-                return;
+            if (dgvNhanVien.CurrentRow == null) return;
 
-            int id = Convert.ToInt32(
-                dgvNhanVien.CurrentRow.Cells["ID"].Value.ToString()
-            );
+            int id = Convert.ToInt32(dgvNhanVien.CurrentRow.Cells["Id"].Value);
 
             var nv = context.NhanVien.Find(id);
             if (nv != null)
             {
-                DialogResult rs = MessageBox.Show(
-                    "Bạn có chắc muốn xóa nhân viên này?",
-                    "Xác nhận",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (rs == DialogResult.Yes)
+                if (MessageBox.Show("Xóa nhân viên này?", "Xác nhận",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     context.NhanVien.Remove(nv);
                     context.SaveChanges();
-                    frmNhanVien_Load(sender, e);
+                    LoadNhanVien();
                 }
             }
         }
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if (dgvNhanVien.CurrentRow == null) return;
+
             xuLyThem = false;
-            BatTatChucNang(true);
+            BatTatChucNang(false);
 
-            id = Convert.ToInt32(
-                dgvNhanVien.CurrentRow.Cells["ID"].Value.ToString()
-            );
+            id = Convert.ToInt32(dgvNhanVien.CurrentRow.Cells["Id"].Value);
         }
-
         private void btnLuu_Click(object sender, EventArgs e)
         {
-
-            if (string.IsNullOrWhiteSpace(txtTen.Text))
-            {
-                MessageBox.Show("Vui lòng nhập tên nhân viên");
-                return;
-            }
-
+            if (!KiemTraDuLieu()) return;
             if (xuLyThem)
             {
-                NhanVien nv = new NhanVien();
-                nv.MaNV = txtMaNV.Text;
-                nv.HoTen = txtTen.Text;
-                nv.Email = txtEmail.Text;
-                nv.DienThoai = txtSDT.Text;
-                nv.DiaChi = txtDiaChi.Text;
-                nv.NgaySinh = dtpNgaysinh.Value;
-                nv.DangNhap = txtDangNhap.Text;
-                nv.MatKhau = txtMatkhau.Text;
-                nv.VaiTro = cboVaitro.Text;
-                nv.TrangThai = cboTrangthai.Text;
-                nv.NgayTao = DateTime.Now;
+                NhanVien nv = new NhanVien()
+                {
+                    MaNV = txtMaNV.Text,
+                    HoTen = txtTen.Text,
+                    Email = txtEmail.Text,
+                    DienThoai = txtSDT.Text,
+                    DiaChi = txtDiaChi.Text,
+                    NgaySinh = dtpNgaysinh.Value,
+                    DangNhap = txtDangNhap.Text,
+                    MatKhau = txtMatkhau.Text,
+                    VaiTro = cboVaitro.Text,
+                    TrangThai = cboTrangthai.Text,
+                    NgayTao = DateTime.Now
+                };
 
                 context.NhanVien.Add(nv);
-                context.SaveChanges();
             }
             else
             {
@@ -154,14 +147,12 @@ namespace QuanLyHosting
                     nv.NgaySinh = dtpNgaysinh.Value;
                     nv.VaiTro = cboVaitro.Text;
                     nv.TrangThai = cboTrangthai.Text;
-
-                    context.NhanVien.Update(nv);
-                    context.SaveChanges();
                 }
             }
 
-            frmNhanVien_Load(sender, e);
-            BatTatChucNang(false);
+            context.SaveChanges();
+            LoadNhanVien();
+            BatTatChucNang(true);
 
         }
 
@@ -183,7 +174,118 @@ namespace QuanLyHosting
         private void btnThoat_Click(object sender, EventArgs e)
         {
 
-            this.Close();   
+            this.Close();
+        }
+
+        private void dgvNhanVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow row = dgvNhanVien.Rows[e.RowIndex];
+
+            txtMaNV.Text = row.Cells["MaNV"].Value?.ToString();
+            txtTen.Text = row.Cells["HoTen"].Value?.ToString();
+            txtEmail.Text = row.Cells["Email"].Value?.ToString();
+            txtSDT.Text = row.Cells["DienThoai"].Value?.ToString();
+            txtDiaChi.Text = row.Cells["DiaChi"].Value?.ToString();
+            txtDangNhap.Text = row.Cells["DangNhap"].Value?.ToString();
+            cboVaitro.Text = row.Cells["VaiTro"].Value?.ToString();
+            cboTrangthai.Text = row.Cells["TrangThai"].Value?.ToString();
+            dtpNgaysinh.Value = Convert.ToDateTime(row.Cells["NgaySinh"].Value);
+        }
+        bool KiemTraDuLieu()
+        {
+            // Mã NV: NV00 + số
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtMaNV.Text, @"^NV00\d+$"))
+            {
+                MessageBox.Show("Mã NV phải có dạng NV00 + số (VD: NV001)", "Lỗi");
+                txtMaNV.Focus();
+                return false;
+            }
+
+            // Họ tên
+            if (string.IsNullOrWhiteSpace(txtTen.Text))
+            {
+                MessageBox.Show("Vui lòng nhập họ tên", "Lỗi");
+                txtTen.Focus();
+                return false;
+            }
+
+            // Email gmail
+            if (!txtEmail.Text.EndsWith("@gmail.com"))
+            {
+                MessageBox.Show("Email phải có đuôi @gmail.com", "Lỗi");
+                txtEmail.Focus();
+                return false;
+            }
+
+            // SĐT
+            if (txtSDT.Text.Length < 9 || txtSDT.Text.Length > 11)
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ", "Lỗi");
+                txtSDT.Focus();
+                return false;
+            }
+
+            // Đủ 18 tuổi
+            int tuoi = DateTime.Now.Year - dtpNgaysinh.Value.Year;
+            if (dtpNgaysinh.Value.AddYears(tuoi) > DateTime.Now)
+                tuoi--;
+
+            if (tuoi < 18)
+            {
+                MessageBox.Show("Nhân viên phải đủ 18 tuổi", "Lỗi");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void txtSDT_TextChanged(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void txtSDT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim();
+
+            if (string.IsNullOrEmpty(keyword))
+            {
+                LoadNhanVien(); // load lại toàn bộ
+                return;
+            }
+
+            var ds = context.NhanVien
+                .Where(nv =>
+                    nv.MaNV.Contains(keyword) ||
+                    nv.HoTen.Contains(keyword) ||
+                    nv.VaiTro.Contains(keyword)
+                )
+                .Select(nv => new
+                {
+                    nv.Id,
+                    nv.MaNV,
+                    nv.HoTen,
+                    nv.DangNhap,
+                    nv.VaiTro,
+                    nv.TrangThai,
+                    nv.NgayTao
+                })
+                .ToList();
+
+            dgvNhanVien.DataSource = ds;
+        }
+
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            btnTimKiem_Click(sender, e);
         }
     }
 }

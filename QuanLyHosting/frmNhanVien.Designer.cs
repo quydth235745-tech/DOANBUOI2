@@ -34,10 +34,8 @@
             label2 = new Label();
             label1 = new Label();
             groupBox1 = new GroupBox();
-            txtChucvu = new TextBox();
             dtpNgaysinh = new DateTimePicker();
             label14 = new Label();
-            label13 = new Label();
             txtDiaChi = new TextBox();
             label8 = new Label();
             txtSDT = new TextBox();
@@ -63,14 +61,9 @@
             btnLuu = new Button();
             btnHuyBo = new Button();
             btnThoat = new Button();
-            txtTimkiem = new TextBox();
+            txtTimKiem = new TextBox();
             dgvNhanVien = new DataGridView();
-            MaNV = new DataGridViewTextBoxColumn();
-            HovaTen = new DataGridViewTextBoxColumn();
-            Tendangnhap = new DataGridViewTextBoxColumn();
-            Vaitro = new DataGridViewTextBoxColumn();
-            Trangthai = new DataGridViewTextBoxColumn();
-            Ngaytao = new DataGridViewTextBoxColumn();
+            btnTimKiem = new Button();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -88,14 +81,14 @@
             panel1.ForeColor = Color.Black;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1273, 76);
+            panel1.Size = new Size(1758, 76);
             panel1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new Point(1154, 25);
+            button1.Location = new Point(1642, 12);
             button1.Name = "button1";
-            button1.Size = new Size(94, 29);
+            button1.Size = new Size(94, 40);
             button1.TabIndex = 3;
             button1.Text = "Đăng xuất";
             button1.UseVisualStyleBackColor = true;
@@ -103,22 +96,22 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Times New Roman", 13.8F);
             label3.ForeColor = Color.Transparent;
-            label3.Location = new Point(1004, 28);
+            label3.Location = new Point(1411, 18);
             label3.Name = "label3";
-            label3.Size = new Size(113, 22);
+            label3.Size = new Size(135, 26);
             label3.TabIndex = 2;
             label3.Text = "Quản trị viên";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Times New Roman", 13.8F);
             label2.ForeColor = Color.Transparent;
-            label2.Location = new Point(889, 27);
+            label2.Location = new Point(1296, 17);
             label2.Name = "label2";
-            label2.Size = new Size(96, 22);
+            label2.Size = new Size(117, 26);
             label2.TabIndex = 1;
             label2.Text = "Admin      |";
             // 
@@ -135,10 +128,8 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(txtChucvu);
             groupBox1.Controls.Add(dtpNgaysinh);
             groupBox1.Controls.Add(label14);
-            groupBox1.Controls.Add(label13);
             groupBox1.Controls.Add(txtDiaChi);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(txtSDT);
@@ -151,27 +142,20 @@
             groupBox1.Controls.Add(label4);
             groupBox1.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.SteelBlue;
-            groupBox1.Location = new Point(21, 94);
+            groupBox1.Location = new Point(18, 94);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(575, 293);
+            groupBox1.Size = new Size(824, 283);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin nhân viên";
-            // 
-            // txtChucvu
-            // 
-            txtChucvu.Location = new Point(172, 253);
-            txtChucvu.Name = "txtChucvu";
-            txtChucvu.Size = new Size(371, 30);
-            txtChucvu.TabIndex = 13;
             // 
             // dtpNgaysinh
             // 
             dtpNgaysinh.CustomFormat = "";
             dtpNgaysinh.Format = DateTimePickerFormat.Custom;
-            dtpNgaysinh.Location = new Point(172, 217);
+            dtpNgaysinh.Location = new Point(239, 215);
             dtpNgaysinh.Name = "dtpNgaysinh";
-            dtpNgaysinh.Size = new Size(371, 30);
+            dtpNgaysinh.Size = new Size(494, 30);
             dtpNgaysinh.TabIndex = 12;
             // 
             // label14
@@ -184,21 +168,11 @@
             label14.TabIndex = 11;
             label14.Text = "Ngày sinh :";
             // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.ForeColor = Color.Black;
-            label13.Location = new Point(41, 260);
-            label13.Name = "label13";
-            label13.Size = new Size(92, 23);
-            label13.TabIndex = 10;
-            label13.Text = "Chức vụ :";
-            // 
             // txtDiaChi
             // 
-            txtDiaChi.Location = new Point(172, 181);
+            txtDiaChi.Location = new Point(239, 179);
             txtDiaChi.Name = "txtDiaChi";
-            txtDiaChi.Size = new Size(371, 30);
+            txtDiaChi.Size = new Size(494, 30);
             txtDiaChi.TabIndex = 9;
             // 
             // label8
@@ -213,30 +187,31 @@
             // 
             // txtSDT
             // 
-            txtSDT.Location = new Point(172, 145);
+            txtSDT.Location = new Point(239, 143);
             txtSDT.Name = "txtSDT";
-            txtSDT.Size = new Size(371, 30);
+            txtSDT.Size = new Size(494, 30);
             txtSDT.TabIndex = 7;
+            txtSDT.KeyPress += txtSDT_KeyPress;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(172, 109);
+            txtEmail.Location = new Point(239, 107);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(371, 30);
+            txtEmail.Size = new Size(494, 30);
             txtEmail.TabIndex = 6;
             // 
             // txtTen
             // 
-            txtTen.Location = new Point(172, 73);
+            txtTen.Location = new Point(239, 71);
             txtTen.Name = "txtTen";
-            txtTen.Size = new Size(371, 30);
+            txtTen.Size = new Size(494, 30);
             txtTen.TabIndex = 5;
             // 
             // txtMaNV
             // 
-            txtMaNV.Location = new Point(172, 37);
+            txtMaNV.Location = new Point(239, 35);
             txtMaNV.Name = "txtMaNV";
-            txtMaNV.Size = new Size(371, 30);
+            txtMaNV.Size = new Size(494, 30);
             txtMaNV.TabIndex = 4;
             // 
             // label7
@@ -291,41 +266,41 @@
             groupBox2.Controls.Add(label9);
             groupBox2.Font = new Font("Times New Roman", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             groupBox2.ForeColor = Color.SteelBlue;
-            groupBox2.Location = new Point(627, 94);
+            groupBox2.Location = new Point(884, 94);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(621, 283);
+            groupBox2.Size = new Size(852, 283);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tài khoản";
             // 
             // txtMatkhau
             // 
-            txtMatkhau.Location = new Point(202, 93);
+            txtMatkhau.Location = new Point(197, 93);
             txtMatkhau.Name = "txtMatkhau";
-            txtMatkhau.Size = new Size(353, 28);
+            txtMatkhau.Size = new Size(553, 28);
             txtMatkhau.TabIndex = 6;
             // 
             // txtDangNhap
             // 
-            txtDangNhap.Location = new Point(202, 37);
+            txtDangNhap.Location = new Point(197, 37);
             txtDangNhap.Name = "txtDangNhap";
-            txtDangNhap.Size = new Size(353, 28);
+            txtDangNhap.Size = new Size(553, 28);
             txtDangNhap.TabIndex = 5;
             // 
             // cboVaitro
             // 
             cboVaitro.FormattingEnabled = true;
-            cboVaitro.Location = new Point(202, 139);
+            cboVaitro.Location = new Point(197, 139);
             cboVaitro.Name = "cboVaitro";
-            cboVaitro.Size = new Size(353, 28);
+            cboVaitro.Size = new Size(553, 28);
             cboVaitro.TabIndex = 3;
             // 
             // cboTrangthai
             // 
             cboTrangthai.FormattingEnabled = true;
-            cboTrangthai.Location = new Point(202, 195);
+            cboTrangthai.Location = new Point(197, 195);
             cboTrangthai.Name = "cboTrangthai";
-            cboTrangthai.Size = new Size(353, 28);
+            cboTrangthai.Size = new Size(553, 28);
             cboTrangthai.TabIndex = 4;
             // 
             // label12
@@ -362,7 +337,7 @@
             // 
             label9.AutoSize = true;
             label9.ForeColor = Color.Black;
-            label9.Location = new Point(33, 37);
+            label9.Location = new Point(33, 47);
             label9.Name = "label9";
             label9.Size = new Size(135, 20);
             label9.TabIndex = 0;
@@ -371,9 +346,9 @@
             // btnThem
             // 
             btnThem.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            btnThem.Location = new Point(41, 415);
+            btnThem.Location = new Point(68, 415);
             btnThem.Name = "btnThem";
-            btnThem.Size = new Size(87, 46);
+            btnThem.Size = new Size(139, 46);
             btnThem.TabIndex = 3;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = true;
@@ -382,9 +357,9 @@
             // btnXoa
             // 
             btnXoa.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            btnXoa.Location = new Point(174, 415);
+            btnXoa.Location = new Point(243, 415);
             btnXoa.Name = "btnXoa";
-            btnXoa.Size = new Size(87, 46);
+            btnXoa.Size = new Size(139, 46);
             btnXoa.TabIndex = 4;
             btnXoa.Text = "Xóa";
             btnXoa.UseVisualStyleBackColor = true;
@@ -393,9 +368,9 @@
             // btnSua
             // 
             btnSua.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            btnSua.Location = new Point(311, 415);
+            btnSua.Location = new Point(412, 415);
             btnSua.Name = "btnSua";
-            btnSua.Size = new Size(87, 46);
+            btnSua.Size = new Size(139, 46);
             btnSua.TabIndex = 5;
             btnSua.Text = "Sửa";
             btnSua.UseVisualStyleBackColor = true;
@@ -404,9 +379,9 @@
             // btnLuu
             // 
             btnLuu.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            btnLuu.Location = new Point(441, 415);
+            btnLuu.Location = new Point(584, 415);
             btnLuu.Name = "btnLuu";
-            btnLuu.Size = new Size(87, 46);
+            btnLuu.Size = new Size(139, 46);
             btnLuu.TabIndex = 6;
             btnLuu.Text = "Lưu";
             btnLuu.UseVisualStyleBackColor = true;
@@ -415,9 +390,9 @@
             // btnHuyBo
             // 
             btnHuyBo.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            btnHuyBo.Location = new Point(578, 415);
+            btnHuyBo.Location = new Point(752, 415);
             btnHuyBo.Name = "btnHuyBo";
-            btnHuyBo.Size = new Size(87, 46);
+            btnHuyBo.Size = new Size(139, 46);
             btnHuyBo.TabIndex = 7;
             btnHuyBo.Text = "Hủy bỏ";
             btnHuyBo.UseVisualStyleBackColor = true;
@@ -426,22 +401,22 @@
             // btnThoat
             // 
             btnThoat.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnThoat.Location = new Point(712, 415);
+            btnThoat.Location = new Point(921, 415);
             btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(83, 46);
+            btnThoat.Size = new Size(135, 46);
             btnThoat.TabIndex = 8;
             btnThoat.Text = "Thoát";
             btnThoat.UseVisualStyleBackColor = true;
             btnThoat.Click += btnThoat_Click;
             // 
-            // txtTimkiem
+            // txtTimKiem
             // 
-            txtTimkiem.Location = new Point(905, 415);
-            txtTimkiem.Multiline = true;
-            txtTimkiem.Name = "txtTimkiem";
-            txtTimkiem.Size = new Size(343, 35);
-            txtTimkiem.TabIndex = 9;
-            txtTimkiem.Text = "🔍Search";
+            txtTimKiem.Location = new Point(1317, 415);
+            txtTimKiem.Multiline = true;
+            txtTimKiem.Name = "txtTimKiem";
+            txtTimKiem.Size = new Size(419, 46);
+            txtTimKiem.TabIndex = 9;
+            txtTimKiem.TextChanged += txtTimKiem_TextChanged;
             // 
             // dgvNhanVien
             // 
@@ -449,72 +424,36 @@
             dgvNhanVien.AllowUserToDeleteRows = false;
             dgvNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvNhanVien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvNhanVien.Columns.AddRange(new DataGridViewColumn[] { MaNV, HovaTen, Tendangnhap, Vaitro, Trangthai, Ngaytao });
             dgvNhanVien.Location = new Point(18, 480);
             dgvNhanVien.MultiSelect = false;
             dgvNhanVien.Name = "dgvNhanVien";
             dgvNhanVien.ReadOnly = true;
             dgvNhanVien.RowHeadersWidth = 51;
             dgvNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvNhanVien.Size = new Size(1230, 347);
+            dgvNhanVien.Size = new Size(1718, 496);
             dgvNhanVien.TabIndex = 10;
+            dgvNhanVien.CellContentClick += dgvNhanVien_CellContentClick;
             // 
-            // MaNV
+            // btnTimKiem
             // 
-            MaNV.DataPropertyName = "MaNV";
-            MaNV.HeaderText = "Mã NV";
-            MaNV.MinimumWidth = 6;
-            MaNV.Name = "MaNV";
-            MaNV.ReadOnly = true;
-            // 
-            // HovaTen
-            // 
-            HovaTen.DataPropertyName = "HovaTen";
-            HovaTen.HeaderText = "Họ và Tên";
-            HovaTen.MinimumWidth = 6;
-            HovaTen.Name = "HovaTen";
-            HovaTen.ReadOnly = true;
-            // 
-            // Tendangnhap
-            // 
-            Tendangnhap.DataPropertyName = "Tendangnhap";
-            Tendangnhap.HeaderText = "Tên đăng nhập";
-            Tendangnhap.MinimumWidth = 6;
-            Tendangnhap.Name = "Tendangnhap";
-            Tendangnhap.ReadOnly = true;
-            // 
-            // Vaitro
-            // 
-            Vaitro.DataPropertyName = "Vaitro";
-            Vaitro.HeaderText = "Vai trò";
-            Vaitro.MinimumWidth = 6;
-            Vaitro.Name = "Vaitro";
-            Vaitro.ReadOnly = true;
-            // 
-            // Trangthai
-            // 
-            Trangthai.DataPropertyName = "Trangthai";
-            Trangthai.HeaderText = "Trạng thái";
-            Trangthai.MinimumWidth = 6;
-            Trangthai.Name = "Trangthai";
-            Trangthai.ReadOnly = true;
-            // 
-            // Ngaytao
-            // 
-            Ngaytao.DataPropertyName = "Ngaytao";
-            Ngaytao.HeaderText = "Ngày tạo";
-            Ngaytao.MinimumWidth = 6;
-            Ngaytao.Name = "Ngaytao";
-            Ngaytao.ReadOnly = true;
+            btnTimKiem.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnTimKiem.Location = new Point(1138, 415);
+            btnTimKiem.Name = "btnTimKiem";
+            btnTimKiem.Size = new Size(129, 46);
+            btnTimKiem.TabIndex = 11;
+            btnTimKiem.Text = "Tìm Kiếm";
+            btnTimKiem.UseVisualStyleBackColor = true;
+            btnTimKiem.Click += btnTimKiem_Click;
             // 
             // frmNhanVien
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1273, 839);
+            ClientSize = new Size(1758, 988);
+            Controls.Add(btnTimKiem);
             Controls.Add(dgvNhanVien);
-            Controls.Add(txtTimkiem);
+            Controls.Add(txtTimKiem);
             Controls.Add(btnThoat);
             Controls.Add(btnHuyBo);
             Controls.Add(btnLuu);
@@ -568,23 +507,16 @@
         private Label label9;
         private TextBox txtMatkhau;
         private TextBox txtDangNhap;
-        private TextBox txtChucvu;
         private DateTimePicker dtpNgaysinh;
         private Label label14;
-        private Label label13;
         private Button btnThem;
         private Button btnXoa;
         private Button btnSua;
         private Button btnLuu;
         private Button btnHuyBo;
         private Button btnThoat;
-        private TextBox txtTimkiem;
+        private TextBox txtTimKiem;
         private DataGridView dgvNhanVien;
-        private DataGridViewTextBoxColumn MaNV;
-        private DataGridViewTextBoxColumn HovaTen;
-        private DataGridViewTextBoxColumn Tendangnhap;
-        private DataGridViewTextBoxColumn Vaitro;
-        private DataGridViewTextBoxColumn Trangthai;
-        private DataGridViewTextBoxColumn Ngaytao;
+        private Button btnTimKiem;
     }
 }
