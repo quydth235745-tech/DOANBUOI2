@@ -320,10 +320,30 @@ namespace QuanLyHosting
 
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(txtTimKiem.Text))
-    {
+            if (string.IsNullOrWhiteSpace(txtTimKiem.Text))
+            {
                 LoadNhanVien();
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtDiaChi_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

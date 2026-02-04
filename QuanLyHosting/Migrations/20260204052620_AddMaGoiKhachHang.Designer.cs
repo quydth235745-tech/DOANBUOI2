@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuanLyHosting.Data;
 
@@ -11,9 +12,11 @@ using QuanLyHosting.Data;
 namespace QuanLyHosting.Migrations
 {
     [DbContext(typeof(QLHTDbContext))]
-    partial class QLHTDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260204052620_AddMaGoiKhachHang")]
+    partial class AddMaGoiKhachHang
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +120,6 @@ namespace QuanLyHosting.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<bool>("DaThanhToan")
-                        .HasColumnType("bit");
 
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");

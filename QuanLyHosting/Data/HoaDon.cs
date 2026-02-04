@@ -14,6 +14,7 @@ namespace QuanLyHosting.Data
         public DateTime NgayLap { get; set; }
         public decimal TongTien { get; set; }
         public string? GhiChu { get; set; }
+        public bool DaThanhToan { get; set; } 
 
         public virtual KhachHang KhachHang { get; set; } = null!;
         public virtual NhanVien NhanVien { get; set; } = null!;

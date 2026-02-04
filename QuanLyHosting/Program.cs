@@ -12,7 +12,12 @@ namespace QuanLyHosting
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
-            Application.Run(new frmNhanVien());
+            //Application.Run(new frmNhanVien());
+            //Application.Run(new frmKhachHang());
+            //Application.Run(new frmGoiHosting());
+            Application.Run(new frmKhachHang());
+            //Application.Run(new frmHoaDon());
+            
         }
     }
 }

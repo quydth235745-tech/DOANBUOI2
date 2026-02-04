@@ -10,6 +10,7 @@ namespace QuanLyHosting.Data
     internal class KhachHang
     {
         public int ID { get; set; }
+        public int? MaGoi { get; set; } 
         public string HoTen { get; set; } = null!;
         public string DienThoai { get; set; } = null!;
         public string Email { get; set; } = null!;
